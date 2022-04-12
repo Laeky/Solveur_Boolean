@@ -21,5 +21,25 @@ let rec ens exp =
   |NAND(a,b)->(ens a)@(ens b)
   |OR(a,b)->(ens a)@(ens b)
   |XOR(a,b)->(ens a)@(ens b) 
-(* problème doublons dans la liste pour not , and , nand , or ,xor * définir une fonction pour éliminer les doublons)
+(* problème doublons dans la liste pour not , and , nand , or ,xor * définir une fonction pour éliminer les doublons*)
+
+let rec elim_doublon l1 =
+  match l1 with
+  |[]->[]
+  |head::tail->
+      if appartient head tail then
+        elim_doublon tail
+      else  head::elim_doublon queue ;; 
+        
+let rec appartient e l1 = 
+  match l1 with
+  |[] -> false
+  |head::tail -> (e=head) || appartient e tail;;
+
+
+let rec gen_env l1 =
+  match l1 with
+  |[]->[]
+  |head::tail -> [(head;true);(head;false)] append gen_env(head) append gen_env(tail)
+
 
